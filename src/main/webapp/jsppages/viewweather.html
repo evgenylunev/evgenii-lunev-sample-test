@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>Weather</title>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/controller.js"></script>
+  </head>
+  <body>
+  <div id="main" ng-app="weatherApp">
+	<!-- The navigation menu will get the value of the "active" variable as a class.
+		 The $event.preventDefault() stops the page from jumping when a link is clicked. -->
+
+	<div ng-controller="MasterDetailCtrl">
+	 <label>
+       Number of rows:
+       <input type="text" name="numberOfRows" ng-model="numberOfRows" required ng-init="numberOfRows='10'">
+    </label>
+    <button ng-click="loadWeather()">load weather</button>
+	<table>
+		<thead>
+			<tr>
+				<th style="width: 25%;">stationNumber</th>
+				<th style="width: 25%;">start date</th>
+				<!-- <th style="width: 10%;">month</th> -->
+				<th style="width: 25%;">end date</th>
+				<th style="width: 25%;">rain</th>
+			</tr>
+		</thead>
+		<tbody>
+	 <tr ng-repeat='row in listOfWeather' ng-show="!$last">
+	 				<td align="center"> {{row.stationNumber}}</td>
+	 				<td align="center">{{listOfWeather[$index + 1].year}} - {{listOfWeather[$index + 1].month}} - {{listOfWeather[$index + 1].day}}</td>
+                    <td align="center"> {{row.year}} - {{row.month}} - {{row.day}}</td>
+                    
+                    <!-- <td align="center">  </td> -->
+                    
+                    <td align="center"> {{listOfWeather[$index + 1].rain === "true" ? "raining" : "sunny"}} </td>
+
+                </tr>
+         </tbody>
+      </table>
+	</div>
+</div>
+  </body>
+</html>
