@@ -1,21 +1,24 @@
-<html>
-  <head>
-    <title>Weather</title>
-    <script src="/js/angular.min.js"></script>
-    <script src="/js/controller.js"></script>
-  </head>
-  <body>
-  <div id="main" ng-app="weatherApp">
-	<!-- The navigation menu will get the value of the "active" variable as a class.
-		 The $event.preventDefault() stops the page from jumping when a link is clicked. -->
+<html lang="en" ng-app="protojson">
+<head>
+  <meta charset="utf-8">
+  <title>Protojson</title>
+   <script src="/js/ByteBufferAB.min.js"></script>
+  <script src="/js/protobuf.js"></script>
+  <script src="/js/angular.min.js"></script>
+  <script src="/js/main.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.css"> -->
+</head>
 
-	<div ng-controller="MasterDetailCtrl">
-	 <label>
+<body ng-controller="WeatherCtrl">
+  <h1>Weather page</h1>
+  <label>
        Number of rows:
        <input type="text" name="numberOfRows" ng-model="numberOfRows" required ng-init="numberOfRows='10'">
     </label>
-    <button ng-click="loadWeather()">load weather</button>
-	<table>
+  <button ng-click="getContacts()">Get all with JSON</button>
+  <button ng-click="getContactsProtobuf()">Get all with ProtoBuf</button>
+
+<table>
 		<thead>
 			<tr>
 				<th style="width: 25%;">stationNumber</th>
@@ -26,19 +29,20 @@
 			</tr>
 		</thead>
 		<tbody>
-	 <tr ng-repeat='row in listOfWeather' ng-show="!$last">
-	 				<td align="center"> {{row.stationNumber}}</td>
-	 				<td align="center">{{listOfWeather[$index + 1].year}} - {{listOfWeather[$index + 1].month}} - {{listOfWeather[$index + 1].day}}</td>
-                    <td align="center"> {{row.year}} - {{row.month}} - {{row.day}}</td>
+	 <tr ng-repeat='weather in weatherlist' ng-show="!$last">
+	 				<td align="center"> {{weather.stationnumber}}</td>
+	 				<td align="center">{{weatherlist[$index + 1].year}} - {{weatherlist[$index + 1].month}} - {{weatherlist[$index + 1].day}}</td>
+                    <td align="center"> {{weather.year}} - {{weather.month}} - {{weather.day}}</td>
                     
-                    <!-- <td align="center">  </td> -->
                     
-                    <td align="center"> {{listOfWeather[$index + 1].rain === "true" ? "raining" : "sunny"}} </td>
+                    <!-- <td align="center"> {{weatherlist[$index + 1].rain === "true" ? "raining" : "sunny"}} </td> -->
+                    <td align="center"> {{weatherlist[$index + 1].rain}} </td>
 
                 </tr>
          </tbody>
       </table>
-	</div>
-</div>
-  </body>
+
+  
+ 
+</body>
 </html>

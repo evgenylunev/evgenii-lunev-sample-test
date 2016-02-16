@@ -11,6 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.epam.elunev.entities.WeatherClass;
+import com.epam.elunev.entities.WeatherProto;
+import com.epam.elunev.entities.WeatherProto.WeatherItem;
+import com.epam.elunev.entities.WeatherProto.WeatherList;
+import com.epam.elunev.entities.WeatherProto.WeatherList.Builder;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -21,6 +25,7 @@ import com.google.api.services.bigquery.Bigquery;
 import com.google.api.services.bigquery.model.GetQueryResultsResponse;
 import com.google.api.services.bigquery.model.QueryRequest;
 import com.google.api.services.bigquery.model.QueryResponse;
+import com.google.api.services.bigquery.model.TableCell;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -71,8 +76,42 @@ public class WeatherDAOImplementation implements WeatherDAOInterface {
 		LOGGER.info("WeatherDAOImplementation bigquery initialized");
 	}
 
+	
+	@Override
+	public WeatherList getAllProtoWeather(Integer numberOfRows) {
+		
+		
+		Builder builder = WeatherProto.WeatherList.newBuilder();
+		for(TableRow row: runPredefinedQuery(numberOfRows)){
+			TableCell[] cellsArray = new TableCell[row.getF().size()];
+			cellsArray = row.getF().toArray(cellsArray);
+			WeatherItem w = WeatherProto.WeatherItem.newBuilder()
+					.setStationnumber(Long.valueOf( (String) cellsArray[0].getV()))
+					.setYear(Integer.valueOf((String) cellsArray[1].getV()))
+					.setMonth(Integer.valueOf((String) cellsArray[2].getV()))
+					.setDay(Integer.valueOf((String) cellsArray[3].getV()))
+					.setRain(Boolean.valueOf((String) cellsArray[4].getV()))
+					.build();
+			builder.addList(w);
+		}
+		return builder.build();
+	}
+	
 	@Override
 	public List<WeatherClass> getAllWeather(Integer numberOfRows) {
+		
+		List<WeatherClass> result = new ArrayList<>();
+		//LOGGER.error("qeuryRes size:" + queryRes.size());
+		for(TableRow row: runPredefinedQuery(numberOfRows)){
+			
+			WeatherClass wc = WeatherClass.createWeatherClassFromTAbleCells(row.getF());
+			result.add(wc);
+		}
+		return result;
+	}
+	
+
+	private List<TableRow> runPredefinedQuery(Integer numberOfRows){
 		List<TableRow> queryRes = null;
 		String queryString = QUERY_STRING + " LIMIT " + numberOfRows;
 		try {
@@ -84,17 +123,7 @@ public class WeatherDAOImplementation implements WeatherDAOInterface {
 			LOGGER.error("IOException, cause:" + e.getCause());
 			 e.printStackTrace();
 		}
-		List<WeatherClass> result = new ArrayList<>();
-		//LOGGER.error("qeuryRes size:" + queryRes.size());
-		for(TableRow row: queryRes){
-			/*for(String str: row.keySet())
-				LOGGER.error("key: " + str);
-			for(Map.Entry entry: row.entrySet())
-				LOGGER.error("key: " + entry.getKey() + " vlue:" + entry.getValue());*/
-			WeatherClass wc = WeatherClass.createWeatherClassFromTAbleCells(row.getF());
-			result.add(wc);
-		}
-		return result;
+		return queryRes;
 	}
 	
 	 private Bigquery createAuthorizedClient() throws IOException, GeneralSecurityException {

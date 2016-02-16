@@ -16,7 +16,7 @@ import com.google.api.services.bigquery.model.TableCell;
 @XmlRootElement
 public class WeatherClass {
 	
-	private long stationNumber;
+	private long stationnumber;
 	private int year;
 	private int month;
 	private int day;
@@ -30,7 +30,7 @@ public class WeatherClass {
 		WeatherClass wc = new WeatherClass();
 		TableCell[] cellsArray = new TableCell[cells.size()];
 		cellsArray = cells.toArray(cellsArray);
-		wc.setStationNumber(Long.valueOf( (String) cellsArray[0].getV()));
+		wc.setStationnumber(Long.valueOf( (String) cellsArray[0].getV()));
 		wc.setYear(Integer.valueOf((String) cellsArray[1].getV()));
 		wc.setMonth(Integer.valueOf((String) cellsArray[2].getV()));
 		wc.setDay(Integer.valueOf((String) cellsArray[3].getV()));
@@ -38,12 +38,12 @@ public class WeatherClass {
 		return wc;
 	}
 	
-	public long getStationNumber() {
-		return stationNumber;
+	public long getStationnumber() {
+		return stationnumber;
 	}
 
-	public void setStationNumber(long stationNumber) {
-		this.stationNumber = stationNumber;
+	public void setStationnumber(long stationNumber) {
+		this.stationnumber = stationNumber;
 	}
 
 	public int getYear() {

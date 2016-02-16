@@ -1,0 +1,18 @@
+package com.epam.elunev.entities;
+
+
+option java_outer_classname = "WeatherProto";
+
+
+message WeatherItem {
+	required int64 stationnumber = 1;
+	required int32 year = 2;
+	required int32 month = 3;
+	required int32 day = 4;
+	required bool rain = 5;
+
+}
+
+message WeatherList {
+	repeated WeatherItem list = 1;
+}

@@ -3,6 +3,7 @@ package com.epam.elunev.dao;
 import java.util.List;
 
 import com.epam.elunev.entities.WeatherClass;
+import com.epam.elunev.entities.WeatherProto.WeatherList;
 import com.google.inject.ImplementedBy;
 
 /**
@@ -14,4 +15,5 @@ import com.google.inject.ImplementedBy;
 public interface WeatherDAOInterface {
 
 	public List<WeatherClass> getAllWeather(Integer numberOfRows);
+	public WeatherList getAllProtoWeather(Integer numberOfRows);
 }

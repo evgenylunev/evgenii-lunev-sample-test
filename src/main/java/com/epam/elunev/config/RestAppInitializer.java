@@ -4,13 +4,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.ws.rs.ext.MessageBodyReader;
-import javax.ws.rs.ext.MessageBodyWriter;
-
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.epam.elunev.providers.ProtobufProvider;
 import com.epam.elunev.rest.RestService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -46,17 +43,17 @@ public class RestAppInitializer extends GuiceServletContextListener {
 		return Guice.createInjector(new ServletModule() {
             @Override
             protected void configureServlets() {
-                /* bind the REST resources */
+                 //bind the REST resources 
             	Names.bindProperties(binder(), getProperties());
             	bind(RestService.class);
-                /* bind jackson converters for JAXB/JSON serialization */
-                bind(MessageBodyReader.class).to(JacksonJsonProvider.class);
-                bind(MessageBodyWriter.class).to(JacksonJsonProvider.class);
+            	bind(ProtobufProvider.class);
+                 //bind jackson converters for JAXB/JSON serialization 
+                //bind(MessageBodyReader.class).to(ProtobufProvider.class);
+                //bind(MessageBodyWriter.class).to(ProtobufProvider.class);
+                //bind(MessageBodyWriter.class);//.in(RestService.class);
                 
-                serve("*").with(GuiceContainer.class);//, initParams);
-            }
-
-			
+                serve("/epam*").with(GuiceContainer.class);//, initParams);
+            }			
         }
 			,	new JpaPersistModule("weatherServiceJpaUnit")
 			);
