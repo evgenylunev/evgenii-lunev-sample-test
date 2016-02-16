@@ -70,9 +70,45 @@ public class RestService {
 			}catch(NumberFormatException ex){
 				LOGGER.info("Please, provide valid number of rows.");
 			}
-		List <WeatherClass> responseObject = weatherDAO.getAllWeather(numberOfRows);			
 		
-		//return Response.status(Status.OK).entity(responseObject).type("application/json").build();
-		return responseObject;
+		return weatherDAO.getAllProtoWeather(numberOfRows);
+	}
+	
+	@PUT
+	@Produces({MediaType.APPLICATION_JSON})
+    @Path("datastore/add")
+	public Person datastoreAdd(Person person){
+		LOGGER.info("PUT method datastoreAdd name:" + person.getName() + " original name:" + person.getOriginalName());
+		return datastoreDAO.add(person);
+	
+	}	
+	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+    @Path("datastore/update")
+	public Person datastoreUpdate(Person person){
+		LOGGER.info("POST method datastore update name:" + person.getName() + " id:" + person.getId() + " description:" + person.getDescription());
+		return datastoreDAO.update(person);
+	
+	}
+	
+	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+    @Path("datastore/delete")
+	public Person datastoreDeleteByName(Person person){
+		LOGGER.info("DELETE method datastoreDeleteByName key string:" + person.getId() + " original name:" + person.getOriginalName());
+		datastoreDAO.delete(person);
+		return null;
+	
+	}	
+
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+    @Path("datastore/list")
+	public List<Person> datastoreList(){
+		
+		return datastoreDAO.list();
+	
 	}
 }
