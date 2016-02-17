@@ -4,14 +4,12 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
@@ -22,7 +20,6 @@ import com.epam.elunev.dao.WeatherDAOInterface;
 import com.epam.elunev.entities.Person;
 import com.epam.elunev.entities.WeatherClass;
 import com.epam.elunev.entities.WeatherProto.WeatherList;
-import com.google.appengine.api.datastore.Entity;
 import com.google.inject.Inject;
 
 /**
