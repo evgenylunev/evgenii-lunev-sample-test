@@ -75,7 +75,7 @@ public class RestService {
 	@Produces({MediaType.APPLICATION_JSON})
     @Path("datastore/add")
 	public Person datastoreAdd(Person person){
-		LOGGER.info("PUT method datastoreAdd name:" + person.getName() + " original name:" + person.getOriginalName());
+		LOGGER.info("PUT method datastoreAdd name:" + person.getName());
 		return datastoreDAO.add(person);
 	
 	}	
@@ -93,8 +93,8 @@ public class RestService {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
     @Path("datastore/delete")
-	public Person datastoreDeleteByName(Person person){
-		LOGGER.info("DELETE method datastoreDeleteByName key string:" + person.getId() + " original name:" + person.getOriginalName());
+	public Person datastoreDeleteById(Person person){
+		LOGGER.info("DELETE method datastoreDeleteByName key string:" + person.getId());
 		datastoreDAO.delete(person);
 		return null;
 	

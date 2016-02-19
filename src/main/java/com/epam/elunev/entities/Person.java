@@ -20,7 +20,6 @@ public class Person {
 	
 	private String id;
 	private String name;
-	private String originalName;
 	private String description;
 	private Date date;
 	
@@ -54,14 +53,6 @@ public class Person {
 	}
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public String getOriginalName() {
-		return originalName;
-	}
-
-	public void setOriginalName(String originalName) {
-		this.originalName = originalName;
 	}
 
 	public String getId() {
